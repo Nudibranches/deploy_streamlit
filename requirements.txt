@@ -1,4 +1,5 @@
 firebase-admin
+google.oauth2
 streamlit
 altair
 pandas
