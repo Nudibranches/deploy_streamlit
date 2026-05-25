@@ -30,7 +30,7 @@ if fullView:
 # Search by title
 def loadByName(name):
  name = name.title()
- names_ref = dbNames.where('name', 'array_contains', name)
+ names_ref = dbNames.where(u'name', u'array_contains', name)
  currentName = None
  for myname in names_ref.stream():
   currentName = myname
