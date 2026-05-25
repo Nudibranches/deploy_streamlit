@@ -29,7 +29,8 @@ if fullView:
 
 # Search by title
 def loadByName(name):
- names_ref = dbNames.where(u'name', u'==', name)
+ name = name.title()
+ names_ref = dbNames.where('name', 'array-contains', name)
  currentName = None
  for myname in names_ref.stream():
   currentName = myname
@@ -87,7 +88,7 @@ submit = sidebar.button("Crear un nuevo filme")
 
 # Upload to database
 if nameSet and compSelect and dirSelect and gnrSelect and submit:
- doc_ref = db.collection("movies").document(name)
+ doc_ref = db.collection("movies").document(nameSet)
  doc_ref.set({
      "company": compSelect,
      "director": dirSelect,
