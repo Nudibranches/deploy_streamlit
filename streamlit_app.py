@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import time
 from google.cloud import firestore
 from google.oauth2 import service_account
 
@@ -36,12 +37,15 @@ nameSearch = sidebar.text_input("Título del filme:")
 btnSearch = sidebar.button("Buscar filmes")
 
 if btnSearch:
- doc = movies_dataframe[movies_dataframe["name"].str.contains(name.title())]
+ doc = movies_dataframe[movies_dataframe["name"].str.contains(nameSearch.title())]
  if len(doc) == 0:
-  sidebar.write("Sin resultados")
+  with st.empty.container():
+    sidebar.write("Sin resultados")
+    time.sleep(3)
+  st.empty().empty()
  else:
   st.success("Filmes encontrados:", len(doc))
-  st.dataframe(movies_dataframe[movies_dataframe["name"].str.contains(name.title())])
+  st.dataframe(doc)
 
 # Filter by director
 def loadByDirector(name):

@@ -1,6 +1,5 @@
 firebase-admin
 google-auth
 streamlit
-altair
 pandas
-numpy
+time
