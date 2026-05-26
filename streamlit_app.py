@@ -44,8 +44,11 @@ if btnSearch:
     time.sleep(3)
   st.empty().empty()
  else:
-  st.success("Filmes encontrados:", len(doc))
   st.dataframe(doc)
+  with st.empty.container():
+    sidebar.write("Filmes encontrados: {len(doc)}")
+    time.sleep(3)
+  st.empty().empty()
 
 # Filter by director
 def loadByDirector(name):
