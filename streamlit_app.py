@@ -17,34 +17,31 @@ sidebar = st.sidebar
 st.header("Netflix app")
 
 # Prepare main dataframe
-movies_ref = list(db.collection(u'movies').stream())
-movies_dict = list(map(lambda x: x.to_dict(), movies_ref))
-movies_dataframe = pd.DataFrame(movies_dict)
+@st.cache_data
+def get_df():
+  movies_ref = list(db.collection(u'movies').stream())
+  movies_dict = list(map(lambda x: x.to_dict(), movies_ref))
+  st.success("Done! (using st.cache)")
+  return pd.DataFrame(movies_dict)
+
+movies_dataframe = get_df()
 
 # Full df visibility
 fullView = sidebar.checkbox("Mostrar todos los filmes")
 if fullView:
-  st.write("Done! (using st.cache)")
   st.dataframe(movies_dataframe)
 
 # Search by title
-def loadByName(name):
- name = name.title()
- names_ref = dbNames.where(u'name', u'array_contains', name)
- currentName = None
- for myname in names_ref.stream():
-  currentName = myname
- return currentName
-
 nameSearch = sidebar.text_input("Título del filme:")
 btnSearch = sidebar.button("Buscar filmes")
 
 if btnSearch:
- doc = loadByName(nameSearch)
- if doc is None:
-  sidebar.write("Filme no encontrado")
+ doc = movies_dataframe[movies_dataframe["name"].str.contains(name.title())]
+ if len(doc) == 0:
+  sidebar.write("Sin resultados")
  else:
-  st.write(doc.to_dict())
+  st.success("Filmes encontrados:", len(doc))
+  st.dataframe(movies_dataframe[movies_dataframe["name"].str.contains(name.title())])
 
 # Filter by director
 def loadByDirector(name):
