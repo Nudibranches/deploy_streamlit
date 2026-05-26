@@ -27,11 +27,12 @@ def get_df():
   return pd.DataFrame(movies_dict)
 
 movies_dataframe = get_df()
+printDF = st.dataframe(movies_dataframe)
 
 # Full df visibility
 fullView = sidebar.checkbox("Mostrar todos los filmes")
 if fullView:
-  st.dataframe(movies_dataframe)
+  printDF
 
 # Search by title
 nameSearch = sidebar.text_input("Título del filme:")
@@ -45,6 +46,7 @@ if btnSearch:
     time.sleep(3)
   placeholder.empty()
  else:
+  not(fullView)
   st.dataframe(doc)
   with placeholder:
     sidebar.write(f"Filmes encontrados: {len(doc)}")
