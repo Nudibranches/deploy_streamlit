@@ -40,16 +40,10 @@ btnSearch = sidebar.button("Buscar filmes")
 if btnSearch:
  doc = movies_dataframe[movies_dataframe["name"].str.contains(nameSearch.title())]
  if len(doc) == 0:
-  with placeholder:
-    sidebar.write("Sin resultados")
-    time.sleep(2)
-    st.empty()
+  sidebar.write("Sin resultados")
  else:
   printDF = st.dataframe(doc)
-  with placeholder:
-    sidebar.write(f"Filmes encontrados: {len(doc)}")
-    time.sleep(2)
-    st.empty()
+  sidebar.write(f"Filmes encontrados: {len(doc)}")
 
 # Filter by director
 def loadByDirector(name):
