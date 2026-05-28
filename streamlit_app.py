@@ -23,7 +23,8 @@ st.header("Netflix app")
 def get_df():
   movies_ref = list(db.collection(u'movies').stream())
   movies_dict = list(map(lambda x: x.to_dict(), movies_ref))
-  st.success("Done! (using st.cache)")
+  placeholder.success("Done! (using st.cache)")
+  placeholder.empty()
   return pd.DataFrame(movies_dict)
 
 movies_dataframe = get_df()
@@ -42,14 +43,14 @@ if btnSearch:
  if len(doc) == 0:
   with placeholder:
     sidebar.write("Sin resultados")
-    time.sleep(3)
-  placeholder.empty()
+    time.sleep(2)
+    st.empty()
  else:
   printDF = st.dataframe(doc)
   with placeholder:
     sidebar.write(f"Filmes encontrados: {len(doc)}")
-    time.sleep(3)
-  placeholder.empty()
+    time.sleep(2)
+    st.empty()
 
 # Filter by director
 def loadByDirector(name):
