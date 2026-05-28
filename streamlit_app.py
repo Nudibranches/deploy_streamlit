@@ -23,8 +23,7 @@ st.header("Netflix app")
 def get_df():
   movies_ref = list(db.collection(u'movies').stream())
   movies_dict = list(map(lambda x: x.to_dict(), movies_ref))
-  placeholder.success("Done! (using st.cache)")
-  placeholder.empty()
+  st.success("Done! (using st.cache)")
   return pd.DataFrame(movies_dict)
 
 movies_dataframe = get_df()
