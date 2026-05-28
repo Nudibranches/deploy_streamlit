@@ -46,13 +46,6 @@ if btnSearch:
   sidebar.write(f"Filmes encontrados: {len(doc)}")
 
 # Filter by director
-def loadByDirector(name):
- names_ref = dbNames.where(u'director', u'==', name)
- currentName = None
- for myname in names_ref.stream():
-  currentName = myname
- return currentName
-
 selectFilter = sidebar.selectbox(
     "Seleccionar director",
     movies_dataframe['director'].unique(),
@@ -62,8 +55,9 @@ selectFilter = sidebar.selectbox(
 btnFilter = sidebar.button("Filtrar director")
 
 if btnFilter:
- doc = loadByDirector(selectFilter)
- st.write(doc.to_dict())
+ doc = movies_dataframe[movies_dataframe["director"].str.contains(selectFilter)]
+ printDF = st.dataframe(doc)
+ sidebar.write(f"Filmes encontrados: {len(doc)}")
 
 # New entry
 st.sidebar.markdown("""---""")
