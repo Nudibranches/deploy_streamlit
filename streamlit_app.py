@@ -81,11 +81,11 @@ submit = sidebar.button("Crear un nuevo filme")
 
 # Upload to database
 if nameSet and compSelect and dirSelect and gnrSelect and submit:
- doc_ref = db.collection("movies").document(nameSet)
- doc_ref.set({
-     "company": compSelect,
-     "director": dirSelect,
-     "genre": gnrSelect,
-     "name": nameSet
- })
- st.sidebar.write("Filme añadido correctamente")
+ new_movie = {"company": compSelect,
+              "director": dirSelect,
+              "genre": gnrSelect,
+              "name": nameSet}
+ update_time, movie_ref = db.collection("movies").add(new_movie)
+ sidebar.write("Filme añadido correctamente")
+ get_df.clear()
+ st.rerun()
